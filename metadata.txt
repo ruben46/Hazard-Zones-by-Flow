@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Since 
+# version 2.0 of QGIS this is the proper way to supply 
+# information about a plugin. The old method of 
+# embedding metadata in __init__.py will 
+# is no longer supported since version 2.0.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=Hazard Zones by Flow
+qgisMinimumVersion=2.0
+description=This Plugin is for the evaluation of hazard zones by torrent flow from pond/dam breach
+version=0.1
+author=Ruben Munoz Sanchez
+email=ruben46@usal.es
+
+about=This Plugin is for the evaluation of hazard zones by torrent flow from pond/dam breach. This work corresponds to the task of the Open Source subject of the master degree in cartographic geotechnologies from the University of Salamanca.
+
+tracker=www.usal.es
+repository=www.usal.es
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=flow, hazard, dam, raster, iber, hydraulic
+
+homepage=www.usal.es
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
