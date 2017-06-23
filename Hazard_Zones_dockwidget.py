@@ -69,6 +69,7 @@ class HazardZonesByFlowDockWidget(QtGui.QDockWidget, FORM_CLASS):
         self.initialize()
         self.initializeRasterComboBox()
         self.output_format()
+        self.canvas = self.iface.mapCanvas()
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
@@ -95,7 +96,6 @@ class HazardZonesByFlowDockWidget(QtGui.QDockWidget, FORM_CLASS):
 
         # Eventos
         QtCore.QObject.connect(self.startPushButton, QtCore.SIGNAL("clicked(bool)"), self.startProcess)
-        #self.rasterComboBox.editTextChanged.connect(self.refreshStates)
         self.rasterComboBox.activated.connect(self.loadSourcePath)
         QtCore.QObject.connect(self.cmdBrowse, QtCore.SIGNAL("clicked(bool)"), self.output_patch)
         QtCore.QObject.connect(self.velocidadRadioButton, QtCore.SIGNAL('toggled(bool)'), self.change_units_v)
@@ -105,6 +105,13 @@ class HazardZonesByFlowDockWidget(QtGui.QDockWidget, FORM_CLASS):
         QtCore.QObject.connect(self.siRadioButton, QtCore.SIGNAL('toggled(bool)'), self.control_RB_units)
         self.nameoutLineEdit.textChanged.connect(self.actualice_text)
         self.nameoutLineEdit.textChanged.connect(self.actualice_directorio)
+
+        QtCore.QObject.connect(self.iface, QtCore.SIGNAL('layersChanged()'), self.layer_changed)
+
+    def layer_changed(self):
+        self.rasterComboBox.clear()
+        for layer in self.canvas.layers():
+            self.rasterComboBox.addItem(layer.name())
 
     def actualice_directorio(self):
         # Función que si detecta que ha cambiado el texto del line edit, cambia de valor la variable para que el
@@ -381,6 +388,7 @@ class HazardZonesByFlowDockWidget(QtGui.QDockWidget, FORM_CLASS):
                                         self.progressBar.setValue(19 + int(contador * 77.5 / (cols*rows)))
 
                                 self.status(3)
+                                self.progressBar.setValue(97)
 
                                 # Transformación de la lista en array
                                 raster = np.asarray(raster)
@@ -391,6 +399,7 @@ class HazardZonesByFlowDockWidget(QtGui.QDockWidget, FORM_CLASS):
                                                        band.YSize,
                                                        number_band,
                                                        data_type)
+                                self.progressBar.setValue(98)
 
                                 # Aquí se escribe el raster de salida
                                 dst_ds.GetRasterBand(number_band).WriteArray(raster)
@@ -404,6 +413,7 @@ class HazardZonesByFlowDockWidget(QtGui.QDockWidget, FORM_CLASS):
                                 # setting spatial reference of output raster
                                 srs = osr.SpatialReference(wkt=prj)
                                 dst_ds.SetProjection(srs.ExportToWkt())
+                                self.progressBar.setValue(99)
 
                                 band.FlushCache()
 
