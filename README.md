@@ -22,4 +22,4 @@ This Plugin is for the evaluation of hazard zones by torrent flow from pond/dam 
 4. Start process
 
 *Input/output:
-![OutInput.jpg]({{site.baseurl}}/OutInput.jpg)
+![OutInput.jpg]({{site.baseurl}}/images/OutInput.jpg)
